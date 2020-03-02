@@ -1,0 +1,16 @@
+*.pkl
+*.pyc
+*.torch
+*.npy
+*.csv
+*.eps
+*.swp
+*.pdf
+stdout.txt
+misc/
+jobs/
+data/*/*
+.vscode/
+.ipynb_checkpoints/
+pretrain/*
+Untitled*.ipynb
