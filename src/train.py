@@ -81,13 +81,14 @@ if __name__ == "__main__":
                 x, loss = pgd_attack_smooth(model, x, y, eps, noise, sample_size=4, adv=args.adv)
             elif args.stability:
                 x_tilde = noise.sample(x.view(len(x), -1)).view(x.shape)
+                x = noise.sample(x.view(len(x), -1)).view(x.shape)
             elif not args.direct:
                 x = noise.sample(x.view(len(x), -1)).view(x.shape)
 
             if args.direct:
                 loss = -direct_train_log_lik(model, x, y, noise, sample_size=16).mean()
             elif args.stability:
-                pred_x = model.forecast(model.forward(x_tilde))
+                pred_x = model.forecast(model.forward(x))
                 pred_x_tilde = model.forecast(model.forward(x_tilde))
                 loss = -pred_x.log_prob(y) + 6.0 * torch.distributions.kl_divergence(pred_x, pred_x_tilde)
                 loss = loss.mean()
