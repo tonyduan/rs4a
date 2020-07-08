@@ -41,6 +41,7 @@ if __name__ == "__main__":
     argparser.add_argument("--adversarial", action="store_true")
     argparser.add_argument("--stability", action="store_true")
     argparser.add_argument("--direct", action="store_true")
+    argparser.add_argument("--save-path", type=str, default=None)
     argparser.add_argument('--output-dir', type=str, default=os.getenv("PT_OUTPUT_DIR"))
     args = argparser.parse_args()
 
@@ -48,6 +49,14 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__)
 
     model = eval(args.model)(dataset=args.dataset, device=args.device)
+
+    # for fine-tuning a pre-trained model, we strip out the last fc layer
+    if args.save_path:
+        saved_dict = torch.load(args.save_path)
+        del saved_dict["model.module.fc.weight"]
+        del saved_dict["model.module.fc.bias"]
+        model.load_state_dict(saved_dict, strict=False)
+
     model.train()
 
     train_loader = DataLoader(get_dataset(args.dataset, "train"),
