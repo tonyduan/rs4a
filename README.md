@@ -1,6 +1,6 @@
 # Randomized Smoothing of All Shapes and Sizes
 
-Last update: February 2020.
+Last update: July 2020.
 
 ---
 
@@ -8,7 +8,7 @@ Code to accompany our paper:
 
 **Randomized Smoothing of All Shapes and Sizes**  
 *Greg Yang\*, Tony Duan\*, J. Edward Hu, Hadi Salman, Ilya Razenshteyn, Jerry Li.*  
-[[Arxiv Link to Manuscript]](https://arxiv.org/abs/2002.08118)
+International Conference on Machine Learning (ICML), 2020 [[Paper]](https://arxiv.org/abs/2002.08118) [[Blog Post]](http://decentdescent.org/rs4a1.html)
 
 Notably, we outperform existing provably <img alt="$\ell_1$" src="svgs/839a0dc412c4f8670dd1064e0d6d412f.svg" align="middle" width="13.40191379999999pt" height="22.831056599999986pt"/>-robust classifiers on ImageNet and CIFAR-10.
 
@@ -132,7 +132,15 @@ CIFAR-10 (Wide ResNet 40-2): [[All Models,  226 MB]](http://www.tonyduan.com/res
 - Sigma=3.25: [[Uniform]](http://www.tonyduan.com/resources/2020_rs4a_ckpts/cifar_uniform_325.pt)
 - Sigma=3.5: [[Uniform]](http://www.tonyduan.com/resources/2020_rs4a_ckpts/cifar_uniform_350.pt)
 
-An example of usage is below. For more in depth example see our `tutorial.ipynb` notebook.
+By default the models above were trained with noise augmentation. We further improve upon our state-of-the-art certified accuracies using recent advances in training smoothed classifiers: (1) by using stability training (Li et al. NeurIPS 2019), and (2)  by leveraging additional data using (a) pre-training on downsampled ImageNet (Hendrycks et al. NeurIPS 2019) and (b) semi-supervised self-training with data from 80 Million Tiny Images (Carmon et al. 2019). Our improved models trained with these methods are released below.
+
+CIFAR-10 (Wide ResNet 40-2):
+
+- Stability training: [[All Models, 234 MB]](http://www.tonyduan.com/resources/2020_rs4a_ckpts/cifar_stability.zip)
+- Stability training + pre-training: [[All Models, 236 MB]](http://www.tonyduan.com/resources/2020_rs4a_ckpts/cifar_pretrained.zip)
+- Stability training + semi-supervised learning: [[All Models, 235 MB]](http://www.tonyduan.com/resources/2020_rs4a_ckpts/cifar_semisup.zip)
+
+An example of pre-trained model usage is below. For more in depth example see our `tutorial.ipynb` notebook.
 
 ```python
 from src.models import WideResNet
